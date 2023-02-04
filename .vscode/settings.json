@@ -1,0 +1,8 @@
+{
+    "yaml.schemas": {
+        "kubernetes://schema/apps/v1%40deployment": [
+            "file:///c%3A/Users/victor/Desktop/K8s/dra/react.yml"
+        ],
+        "https://json.schemastore.org/sourcehut-build-0.65.0.json": "file:///c%3A/Users/victor/Desktop/K8s/dra/django.yml"
+    }
+}

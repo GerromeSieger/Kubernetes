@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ReactClient
+  labels:
+    app: client
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: react-container
+        image: gerrome/pern-stack_client:1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ReactService
+spec:
+  type: ClusterIP
+  selector:
+    app: client
+  ports:
+  - name: http
+    port: 80

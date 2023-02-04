@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: React
+spec:
+   replicas: 2
+   selector:
+    matchLabels:
+      app: DjangoReactApp
+      tier: frontend
+      track: stable
+   template:
+    metadata:
+      labels:
+        app: DjangoReactApp
+        tier: frontend
+        track: stable
+    spec:
+      containers:
+        - name: react-container
+          image: gerrome/django-react-app_client:1.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ReactService
+spec:
+  type: ClusterIP
+  selector:
+    app: DjangoReactApp
+    tier: frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
