@@ -1,51 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: django-deployment
-  namespace: django-react-app
+  name: java-deployment
+  namespace: java-angular  
   labels:
-    app: backend  
+    app: backend
 spec:
-   replicas: 2
-   selector:
+  selector:
     matchLabels:
       app: backend
-   template:
+  template:
     metadata:
       labels:
         app: backend
     spec:
       containers:
-        - name: django-container        
-          image: gerrome/django-react-app_backend:2.1
-          imagePullPolicy: Always             
-          ports:
-            - containerPort: 8000
-          env:
+      - name: java-container
+        image: gerrome/java-angular-stack_backend:1
+        ports:
+        - containerPort: 8080
+        env:                
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: postgres-user          
+                  key: user          
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: postgres-password
+                  key: password
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: postgres-db
+                  key: database
             - name: DATABASE_URL
-              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@pgdb:5432/$(POSTGRES_DB) 
-          command: ["python manage.py migrate"]    
+              value: jdbc:postgresql://db:5432/postgres
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: django-service
-  namespace: django-react-app  
+  name: java-service
+  namespace: java-angular  
 spec:
   type: ClusterIP
   selector:
@@ -53,4 +50,4 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 8000
+    targetPort: 8080

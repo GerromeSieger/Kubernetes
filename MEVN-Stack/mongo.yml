@@ -1,47 +1,50 @@
 apiVersion: v1
 kind: Service 
 metadata:
-  name: mySQL
+  name: mongodb
   labels:
-    app: mySQL  
+    app: mongodb
 spec:
    selector:
-      app: mySQL
+      app: mongodb
    ports:
-        port: 3306
-        targetPort: 3306
+      - protocol: TCP
+        port: 27017
+        targetPort: 27017
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mySQLStatefulset
+  name: mongo-statefulset
+  labels:
+    app: mongodb
 spec:
-   serviceName: mySQL 
+   serviceName: mongodb 
    replicas: 1
    selector:
     matchLabels:
-      app: mySQL
+      app: mongodb
    template:
     metadata:
       labels:
-        app: mySQL
-        selector: mySQL
+        app: mongodb
+        selector: mongodb
     spec:
       containers:
-        - name: mysql-container
-          image: mysql:5.7
+        - name: mongodb-container
+          image: mongo
           ports: 
-            - containerPort: 3306
+            - containerPort: 27017
           env:
-            - name: MYSQL_ROOT_USERNAME
+            - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mysqlSecret
+                  name: mongo-secret
                   key: user
-            - name: MYSQL_ROOT_PASSWORD
+            - name: MONGO_INITDB_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysqlSecret
+                  name: mongo-secret
                   key: password
           volumeMounts:
             - name: pvc
@@ -54,4 +57,5 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 1Gi       
+              storage: 1Gi
+      

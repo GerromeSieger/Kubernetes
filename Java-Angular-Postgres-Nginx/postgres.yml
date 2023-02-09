@@ -1,38 +1,38 @@
 apiVersion: v1
 kind: Service 
 metadata:
-  name: postgresql
-  namespace: pern-stack
+  name: db
+  namespace: java-angular  
   labels:
-    app: postgresql  
+    app: db  
 spec:
    selector:
-      app: postgresql
+      app: db
    ports:
-      - protocol: TCP
-        port: 5432
-        targetPort: 5432
+    - protocol: TCP   
+      port: 5432
+      targetPort: 5432
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: postgres-statefulset
-  namespace: pern-stack  
+  namespace: java-angular  
 spec:
-   serviceName: postgresql 
+   serviceName: db
    replicas: 1
    selector:
     matchLabels:
-      app: postgresql
+      app: db
    template:
     metadata:
       labels:
-        app: postgresql
-        selector: postgresql
+        app: db
+        selector: db
     spec:
       containers:
         - name: postgres-container
-          image: postgres:10.1-alpine
+          image: postgres:12.12-alpine
           ports: 
             - containerPort: 5432
           env:
@@ -40,17 +40,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: postgres-user
+                  key: user          
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: postgres-password
+                  key: password
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
                   name: postgres-secret
-                  key: postgres-db
+                  key: database
           volumeMounts:
             - name: pvc
               mountPath: /data/db
@@ -62,4 +62,4 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 1Gi
+              storage: 1Gi       
