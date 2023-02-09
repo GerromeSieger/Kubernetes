@@ -1,20 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Django
+  name: DjangoDeployment
+  labels:
+    app: backend  
 spec:
    replicas: 2
    selector:
     matchLabels:
-      app: DjangoReactApp
-      tier: backend
-      track: stable
+      app: backend
    template:
     metadata:
       labels:
-        app: DjangoReactApp
-        tier: backend
-        track: stable
+        app: backend
     spec:
       containers:
         - name: django-container        
@@ -26,12 +24,12 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: PostgresSecret
                   key: postgres-user
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: PostgresSecret
                   key: postgres-password
             - name: POSTGRES_DB
               value: realest_estate
@@ -46,8 +44,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: DjangoReactApp
-    tier: backend
+    app: backend
   ports:
   - name: http
     port: 80

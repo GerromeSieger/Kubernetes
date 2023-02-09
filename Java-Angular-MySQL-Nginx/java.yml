@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Backend-Java
+  name: JavaDeployment
   labels:
     app: backend
 spec:
@@ -22,12 +22,12 @@ spec:
           - name: MYSQL_ROOT_USERNAME
             valueFrom:
               secretKeyRef:
-                name: secret-mysql
+                name: MysqlSecret
                 key: user
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: secret-mysql
+                name: MysqlSecret
                 key: password      
 ---
 apiVersion: v1

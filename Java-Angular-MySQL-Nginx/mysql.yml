@@ -1,19 +1,7 @@
-apiVersion: v1
-kind: Service 
-metadata:
-  name: MySQLService
-spec:
-   selector:
-      app: mysql
-   ports:
-        port: 3306
-        targetPort: 3306       
-
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: MySQL
+  name: MySQLStatefulset
 spec:
    serviceName: MySQLService 
    replicas: 1
@@ -27,21 +15,21 @@ spec:
         selector: mysql
     spec:
       containers:
-        - name: postgres-container
+        - name: mysql-container
           image: mysql:5.7
           ports: 
-            - containerPort: 5432
+            - containerPort: 3306
           env:
-            - name: POSTGRES_USER
+            - name: MYSQL_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
-                  key: postgres-user
-            - name: POSTGRES_PASSWORD
+                  name: MysqlSecret
+                  key: user
+            - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
-                  key: postgres-password
+                  name: MysqlSecret
+                  key: password
           volumeMounts:
             - name: pvc
               mountPath: /data/db
@@ -54,4 +42,14 @@ spec:
           resources:
             requests:
               storage: 1Gi
-
+---
+apiVersion: v1
+kind: Service 
+metadata:
+  name: MySQLService
+spec:
+   selector:
+      app: mysql
+   ports:
+        port: 3306
+        targetPort: 3306       

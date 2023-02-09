@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: NodeExpress
+  name: NodeExpressDeployment
   labels:
     app: backend
 spec:
@@ -15,20 +15,31 @@ spec:
         app: backend
     spec:
       containers:
-      - name: backend-container
+      - name: node-express-container
         image: gerrome/mern-stack-app_server:1
         ports:
-        - containerPort: 5000       
+        - containerPort: 5000  
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: MongoSecret
+                key: user
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: MongoSecret
+                key: password             
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: DjangoService
+  name: NodeExpressService
 spec:
   type: ClusterIP
   selector:
     app: backend
   ports:
   - name: http
-    port: 5000
+    port: 80
     targetPort: 5000

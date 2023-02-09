@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: Postgres
+  name: PostgresStatefulSet
 spec:
    serviceName: PostgresService 
    replicas: 1
@@ -23,12 +23,12 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: PostgresSecret
                   key: postgres-user
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
+                  name: PostgresSecret
                   key: postgres-password
           volumeMounts:
             - name: pvc
