@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ReactDeployment
+  name: react-deployment
+  namespace: pern-stack  
   labels:
     app: client
 spec:
@@ -17,13 +18,12 @@ spec:
       containers:
       - name: react-container
         image: gerrome/pern-stack_client:1
-        ports:
-        - containerPort: 3000        
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ReactService
+  name: react-service
+  namespace: pern-stack  
 spec:
   type: ClusterIP
   selector:
@@ -31,4 +31,3 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 3000

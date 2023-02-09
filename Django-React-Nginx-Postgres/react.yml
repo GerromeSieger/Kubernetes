@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ReactDeployment
+  name: react-deployment
+  namespace: django-react-app  
   labels:
     app: client  
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: react-container
-          image: gerrome/django-react-app_client:1.1
+          image: gerrome/django-react-app_client:2.2
           imagePullPolicy: Always
           ports:
             - containerPort: 80
@@ -24,7 +25,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ReactService
+  name: react-service
+  namespace: django-react-app  
 spec:
   type: ClusterIP
   selector:

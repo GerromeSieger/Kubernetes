@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: VuejsDeployment
+  name: vuejs-deployment
   labels:
     app: client
 spec:
@@ -21,7 +21,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: VuejsService
+  name: vuejs-service
 spec:
   type: ClusterIP
   selector:

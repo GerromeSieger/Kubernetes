@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: NodeExpressDeployment 
+  name: node-express-deployment
+  namespace: pern-stack
   labels:
     app: backend
 spec:
@@ -18,27 +19,31 @@ spec:
       - name: backend-container
         image: gerrome/pern-stack_server:1
         ports:
-        - containerPort: 5000
+        - containerPort: 3000
         env:
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: PostgresSecret
+                name: postgres-secret
                 key: postgres-user
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: PostgresSecret
+                name: postgres-secret
                 key: postgres-password
           - name: POSTGRES_DB
-            value: postgres
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: postgres-db
           - name: DATABASE_URL
-            value: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}        
+            value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres-service:5432/$(POSTGRES_DB)       
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: NodeExpressService
+  name: node-express-service
+  namespace: pern-stack  
 spec:
   type: ClusterIP
   selector:
@@ -46,4 +51,4 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 5000
+    targetPort: 3000

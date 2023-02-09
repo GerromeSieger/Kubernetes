@@ -1,18 +1,31 @@
+apiVersion: v1
+kind: Service 
+metadata:
+  name: mySQL
+  labels:
+    app: mySQL  
+spec:
+   selector:
+      app: mySQL
+   ports:
+        port: 3306
+        targetPort: 3306
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: MySQLStatefulset
+  name: mySQLStatefulset
 spec:
-   serviceName: MySQLService 
+   serviceName: mySQL 
    replicas: 1
    selector:
     matchLabels:
-      app: mysql
+      app: mySQL
    template:
     metadata:
       labels:
-        app: mysql
-        selector: mysql
+        app: mySQL
+        selector: mySQL
     spec:
       containers:
         - name: mysql-container
@@ -23,12 +36,12 @@ spec:
             - name: MYSQL_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: MysqlSecret
+                  name: mysqlSecret
                   key: user
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: MysqlSecret
+                  name: mysqlSecret
                   key: password
           volumeMounts:
             - name: pvc
@@ -41,15 +54,4 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 1Gi
----
-apiVersion: v1
-kind: Service 
-metadata:
-  name: MySQLService
-spec:
-   selector:
-      app: mysql
-   ports:
-        port: 3306
-        targetPort: 3306       
+              storage: 1Gi       

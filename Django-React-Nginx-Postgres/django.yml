@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: DjangoDeployment
+  name: django-deployment
+  namespace: django-react-app
   labels:
     app: backend  
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
         - name: django-container        
-          image: gerrome/django-react-app_backend:1.2
+          image: gerrome/django-react-app_backend:2.1
           imagePullPolicy: Always             
           ports:
             - containerPort: 8000
@@ -24,23 +25,26 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: PostgresSecret
-                  key: postgres-user
+                  name: postgres-secret
+                  key: postgres-user          
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: PostgresSecret
+                  name: postgres-secret
                   key: postgres-password
             - name: POSTGRES_DB
-              value: realest_estate
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres-db
             - name: DATABASE_URL
-              value: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-                                                            
+              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@pgdb:5432/$(POSTGRES_DB) 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: DjangoService
+  name: django-service
+  namespace: django-react-app  
 spec:
   type: ClusterIP
   selector:

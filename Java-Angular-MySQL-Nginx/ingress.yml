@@ -8,7 +8,7 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: AngularService
+      name: angular-service
       port:
         number: 80
   rules:
@@ -27,6 +27,6 @@ spec:
        pathType: Prefix
        backend:
          service:
-           name: JavaService
+           name: java-service
            port:
              number: 80
