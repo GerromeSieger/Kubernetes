@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: NodeExpress
+  name: NodeExpressDeployment 
   labels:
     app: backend
 spec:
@@ -23,12 +23,12 @@ spec:
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: postgres-auth
+                name: PostgresSecret
                 key: postgres-user
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgres-auth
+                name: PostgresSecret
                 key: postgres-password
           - name: POSTGRES_DB
             value: postgres
