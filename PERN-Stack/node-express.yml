@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-express-deployment
+  name: node-deployment
   namespace: pern-stack
   labels:
     app: backend
@@ -37,12 +37,12 @@ spec:
                 name: postgres-secret
                 key: postgres-db
           - name: DATABASE_URL
-            value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgresql:5432/$(POSTGRES_DB)       
+            value: postgresql://postgres:5432/PERN-Starter    
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: node-express-service
+  name: node-service
   namespace: pern-stack  
 spec:
   type: ClusterIP
