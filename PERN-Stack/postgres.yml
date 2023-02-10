@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: postgres-container
-          image: postgres:10.1-alpine
+          image: gerrome/pern-store-app_postgres:1
           ports: 
             - containerPort: 5432
           env:

@@ -17,9 +17,10 @@ spec:
     spec:
       containers:
       - name: backend-container
-        image: gerrome/pern-stack_server:1
+        image: gerrome/pern-store-app_server:1
+        imagePullPolicy: Always
         ports:
-        - containerPort: 3000
+        - containerPort: 9000
         env:
           - name: POSTGRES_USER
             valueFrom:
@@ -37,7 +38,7 @@ spec:
                 name: postgres-secret
                 key: postgres-db
           - name: DATABASE_URL
-            value: postgresql://postgres:5432/PERN-Starter    
+            value: postgresql://postgres:postgres@postgres:5432/PERN-Store
 ---
 apiVersion: v1
 kind: Service
@@ -51,4 +52,4 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 3000
+    targetPort: 9000

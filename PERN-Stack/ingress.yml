@@ -9,7 +9,7 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: react-service
+      name: nginx-service
       port:
         number: 80
   rules:
@@ -20,7 +20,7 @@ spec:
        pathType: Prefix
        backend:
          service:
-           name: react-service
+           name: nginx-service
            port:
              number: 80
        
