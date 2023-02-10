@@ -34,7 +34,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: node-express-service
+  name: node-service
 spec:
   type: ClusterIP
   selector:
