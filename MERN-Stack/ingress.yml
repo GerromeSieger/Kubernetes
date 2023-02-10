@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  namespace: mern-stack  
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1    
+spec:
+  defaultBackend:
+    service:
+      name: nginx-service
+      port:
+        number: 80
+  rules:
+  - host: victor.20.84.39.184.nip.io
+    http:
+     paths:
+     - path: /?(.*)
+       pathType: Prefix
+       backend:
+         service:
+           name: nginx-service
+           port:
+             number: 80
+            
+          
+          
+
+    
