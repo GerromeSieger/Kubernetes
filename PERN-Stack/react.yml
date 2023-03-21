@@ -6,7 +6,7 @@ metadata:
   labels:
     app: client
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: client
@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
       - name: react-container
-        image: gerrome/pern-store-app_client:1
+        image: gerrome/pern-stack_client:1
         imagePullPolicy: Always        
         ports:
-        - containerPort: 3000
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -34,4 +34,4 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 3000
+    targetPort: 80

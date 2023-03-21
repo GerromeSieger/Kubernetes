@@ -13,7 +13,7 @@ spec:
       port:
         number: 80
   rules:
-  - host: victorsapp.com
+  - host: app.ifahsvictor.com
     http:
      paths:
      - path: /?(.*)
@@ -24,10 +24,3 @@ spec:
            port:
              number: 80
 
-     - path: /api/?(.*)
-       pathType: Prefix
-       backend:
-         service:
-           name: django-service
-           port:
-             number: 80

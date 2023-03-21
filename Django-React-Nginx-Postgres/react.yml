@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: react-container
-          image: gerrome/django-react-app_client:2.2
+          image: gerrome/django-react-app_client:5
           imagePullPolicy: Always
           ports:
             - containerPort: 80

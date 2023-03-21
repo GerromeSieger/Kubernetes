@@ -2,31 +2,31 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: react-deployment
-  namespace: mern-stack  
+  namespace: php-react-mysql 
   labels:
-    app: client
+    app: client  
 spec:
-  replicas: 5
-  selector:
+   replicas: 2
+   selector:
     matchLabels:
       app: client
-  template:
+   template:
     metadata:
       labels:
         app: client
     spec:
       containers:
-      - name: react-container
-        image: gerrome/mern-stack-app_client:3.1
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
+        - name: react-container
+          image: gerrome/php-react-mysql_client:1.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: react-service
-  namespace: mern-stack  
+  namespace: php-react-mysql
 spec:
   type: ClusterIP
   selector:
@@ -34,4 +34,4 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 80
+    targetPort: 3000

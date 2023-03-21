@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: django-container
-        image: gerrome/django-vuejs_api:1
+        image: gerrome/django-vuejs_api:3        
+        imagePullPolicy: Always                 
         ports:
         - containerPort: 8000       
 ---

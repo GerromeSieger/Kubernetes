@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx-container
-        image: gerrome/php-react-stack_nginx:1
+        image: gerrome/php-react-stack_nginx:1.1
         imagePullPolicy: Always
         ports:
           - containerPort: 80

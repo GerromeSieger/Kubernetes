@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-express-deployment
+  name: node-deployment
   namespace: mern 
   labels:
     app: backend
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: node-express-container
-        image: gerrome/mern-social-media_server:1
+        image: gerrome/mern-social-media_server:1.2
         ports:
         - containerPort: 5000  
         env:

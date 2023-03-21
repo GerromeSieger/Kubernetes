@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service 
 metadata:
   name: mysql
-  namespace: php-react-stack
+  namespace: php-react-mysql
   labels:
     app: mysql  
 spec:
@@ -14,10 +14,10 @@ spec:
         targetPort: 3306
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Statefulset
 metadata:
   name: mysql-statefulset
-  namespace: php-react-stack  
+  namespace: php-react-mysql  
 spec:
    serviceName: mysql
    replicas: 1
@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: mysql-container
-          image: mysql:8.0-debian
+          image: gerrome/php-react-mysql_db:1.2
           ports: 
             - containerPort: 3306
           env:

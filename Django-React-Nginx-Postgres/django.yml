@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: django-container        
-          image: gerrome/django-react-app_backend:2.1
+          image: gerrome/django-react-app_backend:5
           imagePullPolicy: Always             
           ports:
             - containerPort: 8000
@@ -39,7 +39,7 @@ spec:
                   key: postgres-db
             - name: DATABASE_URL
               value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@pgdb:5432/$(POSTGRES_DB) 
-          command: ["python manage.py migrate"]    
+          command: ["sh", "/wsgi-entrypoint.sh"]    
 ---
 apiVersion: v1
 kind: Service

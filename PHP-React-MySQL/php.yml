@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: php-deployment
-  namespace: php-react-stack
+  namespace: php-react-mysql
   labels:
     app: backend  
 spec:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: php-container        
-          image: gerrome/php-react-stack_backend:1.1
+          image: gerrome/php-react-mysql_backend:1.5
           imagePullPolicy: Always             
           ports:
             - containerPort: 8000
@@ -26,15 +26,15 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: db-secret
-                  key: password        
+                  key: password         
             - name: DATABASE_URL
-              value: mysql://root:root@mysql:3306                 
+              value: mysql://root:root@mysql:33060/react-crud          
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: php-service
-  namespace: php-react-stack  
+  namespace: php-react-mysql 
 spec:
   type: ClusterIP
   selector:

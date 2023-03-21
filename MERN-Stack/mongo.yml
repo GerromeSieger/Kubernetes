@@ -16,7 +16,7 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mongo-statefulset
+  name: mongodb-statefulset
   namespace: mern-stack  
   labels:
     app: mongodb
@@ -34,10 +34,14 @@ spec:
     spec:
       containers:
         - name: mongodb-container
-          image: mongo:4.4
+          image: gerrome/mern-stack-app_mongo:2.3
+          imagePullPolicy: Always
           ports: 
             - containerPort: 27017
+          #command: ["sh", "/init.sh"]  
           env:
+            - name: MONGO_INITDB_DATABASE
+              value: "basic-mern-app"
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -49,11 +53,11 @@ spec:
                   name: mongo-secret
                   key: password
           volumeMounts:
-            - name: pvc
-              mountPath: /data/db
+            - name: p-vc
+              mountPath: /data/mydb
    volumeClaimTemplates:
       - metadata:
-          name: pvc
+          name: p-vc
         spec: 
           accessModes:
             - ReadWriteOnce

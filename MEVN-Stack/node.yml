@@ -1,11 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: node-deployment
+  name: node-express-deployment
+  namespace: mevn-stack  
   labels:
     app: backend
 spec:
-  replicas: 5
+  replicas: 2
   selector:
     matchLabels:
       app: backend
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
       - name: node-express-container
-        image: gerrome/mevn-stack-app_server:1
+        image: gerrome/mevn-stack-app_server:1.1
         ports:
         - containerPort: 3000  
         env:
@@ -35,6 +36,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: node-service
+  namespace: mevn-stack  
 spec:
   type: ClusterIP
   selector:
