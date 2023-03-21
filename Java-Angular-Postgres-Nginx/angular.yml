@@ -18,6 +18,10 @@ spec:
       containers:
       - name: angular-container
         image: gerrome/java-angular-stack_frontend:1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80        
+
 ---
 apiVersion: v1
 kind: Service

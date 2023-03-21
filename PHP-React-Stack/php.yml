@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-deployment
+  namespace: php-react-stack
+  labels:
+    app: backend  
+spec:
+   replicas: 2
+   selector:
+    matchLabels:
+      app: backend
+   template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: php-container        
+          image: gerrome/php-react-stack_backend:1
+          imagePullPolicy: Always             
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-service
+  namespace: php-react-stack  
+spec:
+  type: ClusterIP
+  selector:
+    app: backend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8000

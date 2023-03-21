@@ -13,7 +13,7 @@ spec:
       port:
         number: 80
   rules:
-  - host: victor.20.84.39.184.nip.io
+  - host: app.ifahsvictor.com
     http:
      paths:
      - path: /?(.*)
